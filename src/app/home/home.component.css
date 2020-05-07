@@ -1,0 +1,24 @@
+.main
+{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+.footer
+{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  color: white;
+}
+
+@media screen and (max-width:768px)
+{
+  .main
+  {
+    z-index: -1;
+  }
+}

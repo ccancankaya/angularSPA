@@ -1,0 +1,14 @@
+@media screen and (max-width: 770px) {
+    form {
+      display: none;
+    }
+    nav{
+        text-align: center;
+    }
+  }
+
+  @media screen and (min-width:771px){
+      .dropdown{
+          display: none;
+      }
+  }
