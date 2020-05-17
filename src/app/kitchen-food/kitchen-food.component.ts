@@ -6,6 +6,7 @@ import { CategoryService } from '../services/category.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Food } from '../models/food';
 import { Category } from '../models/category';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-kitchen-food',
@@ -15,21 +16,13 @@ import { Category } from '../models/category';
 })
 export class KitchenFoodComponent implements OnInit {
 
-  constructor(private foodService:FoodService,private authService:AuthService,private alertifyService:AlertifyService,private categoryService:CategoryService,private formBuilder:FormBuilder) { }
+  constructor(private foodService:FoodService,private authService:AuthService,private alertifyService:AlertifyService,private categoryService:CategoryService,private formBuilder:FormBuilder,private activatedRoute:ActivatedRoute) { }
 
   currentKitchenId:any
   food:Food;
   foodAddForm:FormGroup
   categories:Category[]
-
-  createFoodForm(){
-    this.foodAddForm=this.formBuilder.group({
-      name:["",Validators.required],
-      description:["",Validators.required],
-      price:["",Validators.required],
-      categoryId:["",Validators.required]
-    })
-  }
+ 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(data=>{
       this.categories=data
@@ -38,9 +31,16 @@ export class KitchenFoodComponent implements OnInit {
       this.currentKitchenId=data;
     });
     this.createFoodForm();
-    
-  }
 
+  }
+  createFoodForm(){
+    this.foodAddForm=this.formBuilder.group({
+      name:["",Validators.required],
+      description:["",Validators.required],
+      price:["",Validators.required],
+      categoryId:["",Validators.required]
+    })
+  }
   addFood()
   {
     if(this.foodAddForm.valid)
@@ -50,6 +50,7 @@ export class KitchenFoodComponent implements OnInit {
       this.food.categoryId=this.foodAddForm.get('categoryId').value;
       this.foodService.addFood(this.food);
       this.alertifyService.success("Yemek başarıyla eklendi");
+      window.location.reload()
     }
   }
 

@@ -11,10 +11,17 @@ export class FoodService {
   constructor(private http: HttpClient) { }
 
   path = "https://localhost:44357/api/food";
+  foodId:number
 
   addFood(food)
   {
-    this.http.post(this.path,food).subscribe();
+    this.http.post(this.path,food).subscribe(data=>{
+      this.foodId=Object.values(data)[0]
+    });
+  }
+
+  get currentFoodId(){
+    return this.foodId
   }
   getFoods(categoryId): Observable<Food[]> {
     let newPath = this.path;

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import {CookieService} from 'ngx-cookie-service';
 import { FormBuilder,Validators, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +14,7 @@ export class NavComponent implements OnInit {
   loginUser: any = {}
   registerUser:any={}
   registerForm:FormGroup
-
+  router:Router
   
   public remember:boolean=false;
   @ViewChild('loginModal') loginModal;
@@ -55,9 +56,8 @@ export class NavComponent implements OnInit {
 
   login() {
     this.authService.login(this.loginUser);
-    window.location.reload();
-
-    
+    //this.router.navigateByUrl("/home");   
+    //window.location.reload(); 
   }
 
   register(){
@@ -71,6 +71,8 @@ export class NavComponent implements OnInit {
 
   logOut() {
     this.authService.logOut();
+    this.router.navigateByUrl("/home");
+    
   }
 
   get isAuthenticated() {

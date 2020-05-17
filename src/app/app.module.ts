@@ -8,7 +8,7 @@ import { NgxGalleryModule } from 'ngx-gallery-9';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { JwtModule } from "@auth0/angular-jwt";
 import {CookieService} from 'ngx-cookie-service';
-
+import {FileUploadModule} from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -28,6 +28,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { MainProfileComponent } from './main-profile/main-profile.component';
 import { OrderComponent } from './order/order.component';
 import { KitchenFoodComponent } from './kitchen-food/kitchen-food.component';
+import { PhotoComponent } from './photo/photo.component';
 
 
 
@@ -55,7 +56,8 @@ export function tokenGetter() {
     SidebarComponent,
     MainProfileComponent,
     OrderComponent,
-    KitchenFoodComponent
+    KitchenFoodComponent,
+    PhotoComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +66,7 @@ export function tokenGetter() {
     HttpClientModule,
     ReactiveFormsModule,
     NgxGalleryModule,
+    FileUploadModule,
     NgxPaginationModule,
     JwtModule.forRoot({
       config: {
