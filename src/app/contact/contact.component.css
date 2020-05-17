@@ -1,0 +1,7 @@
+main{
+    background: url("../../assets/images/bg.jpg");
+    height: 1000px;
+    background-repeat: no-repeat; 
+ 
+    background-size: cover;
+}

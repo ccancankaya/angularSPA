@@ -12,18 +12,9 @@ export class FoodService {
 
   path = "https://localhost:44357/api/food";
 
-  addFood(food:Food):Observable<Food>
+  addFood(food)
   {
-    const httpOptions={
-      headers:new HttpHeaders({
-        'Content-Type':'application/json',
-        'Authorization':'Token'
-      })
-    }
-    return this.http.post<Food>(this.path,food,httpOptions).pipe(
-      tap(data=>console.log(JSON.stringify(data))),
-      catchError(this.handleError)
-    );
+    this.http.post(this.path,food).subscribe();
   }
   getFoods(categoryId): Observable<Food[]> {
     let newPath = this.path;
@@ -49,7 +40,11 @@ export class FoodService {
   }
 
   getPhotosByFood(id):Observable<Photo[]>{
-    return this.http.get<Photo[]>(this.path+"/photos/?foodId="+id);
+    if(id)
+    {
+      console.log("hata")
+    }
+    return this.http.get<Photo[]>(this.path+"/photos/?id="+id);
   }
 
   handleError(err: HttpErrorResponse) {

@@ -1,0 +1,99 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Profilim</h1>
+  </div>
+
+  <div class="card pp">
+    <div class="row no-gutters">
+        <div class="col-auto">
+            <img src="//placehold.it/120" class="img-fluid" alt="">
+        </div>
+        <div class="col">
+            <div class="card-block px-2">
+                <h4 class="card-title text-right mr-4 mt-3">Cumhurcan çankaya</h4>
+                <a href="#" class="btn btn-light btn-shadow btn-sm mb-2" style="background-color: #dee0e3!important;">Resmi değişitr</a>
+            </div>
+        </div>
+    </div>
+ </div>
+ <div class="card descForm mt-3">
+    <form>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Hakkımda</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+          <button class="btn btn-primary">Kaydet</button>
+    </form>
+ </div>
+ <div class="card userForm mt-3">
+    <form>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>İsim</label>
+            <input type="text" class="form-control" placeholder="İsim">
+          </div>
+          <div class="form-group col-md-6">
+            <label >Soyisim</label>
+            <input type="text" class="form-control" placeholder="Soyisim">
+          </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Yaş</label>
+              <input type="text" class="form-control" placeholder="Yaş">
+            </div>
+            <div class="form-group col-md-6">
+                <label>Cinsiyet</label>
+                <select class="form-control">
+                  <option selected>Cinsiyetinizi seçin..</option>
+                  <option>Kadın</option>
+                  <option>Erkek</option>
+                </select>
+              </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label>Mevcut şifreniz</label>
+            <input type="password" class="form-control" placeholder="Eski şifreniz">
+          </div>
+          <div class="form-group">
+            <label>Yeni şifreniz</label>
+            <input type="password" class="form-control" placeholder="Yeni şifreniz">
+          </div>
+
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+      </form>
+ </div>
+ <div class="card addressForm mt-3 mb-3">
+    <form [formGroup]="addAddressForm" (ngSubmit)="addAddress()">
+        <div class="form-group">
+            <label>Başlık</label>
+            <input type="text" class="form-control" formControlName="name" placeholder="Ev,ofis..">
+          </div>
+        <div class="form-group">
+            <label>Adres</label>
+            <input type="text" class="form-control" formControlName="addressline" placeholder="Adresinizi yazın..">
+          </div>
+          <div class="form-group">
+            <label>Adres detay</label>
+            <input type="text" class="form-control" formControlName="addressdetail" placeholder="Adresinizi detaylandırabilirsiniz..">
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label>Mahalle</label>
+              <input type="text" class="form-control" formControlName="neighborhood" placeholder="mahalle..">
+            </div>
+            <div class="form-group col-md-4">
+                <label>İlçe</label>
+                <input type="text" class="form-control" formControlName="district" placeholder="ilçe..">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Şehir</label>
+                <input type="text" class="form-control" formControlName="city" placeholder="şehir..">
+              </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Ekle</button>
+    </form>
+ </div>

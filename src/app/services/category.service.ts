@@ -13,7 +13,7 @@ path=" https://localhost:44357/api/category"
 getCategories():Observable<Category[]>
 {
   return this.httpClient.get<Category[]>(this.path).pipe(
-    tap(data=>console.log(JSON.stringify(data))),
+    tap(data=>{}),
       catchError(this.handleError)
   )
 }

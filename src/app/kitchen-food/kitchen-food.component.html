@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Yemeklerim</h1>
+</div>
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Henüz yemeğin yok!</strong> İlk yemeğini eklemeye hazır mısın? aşağıda bulunan yemek ekle butonuyla başlayabilirsin.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <button class="btn btn-primary">Yemek ekle</button>
+
+  <div class="card mt-3">
+      <div class="card-header">
+          Yemek ekle <strong>sende kazan</strong>      
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="foodAddForm" (ngSubmit)="addFood()" class=""> 
+          <div class="form-group">
+            <label class="font-weight-bolder">Yemek adı</label>
+            <input class="form-control form-control-lg" formControlName="name" type="text" placeholder="Yemek adı..">
+            <small class="form-text text-muted mb-3">Açıklayıcı bir isim koymalısın..</small>
+           <span class="help-block" *ngIf="foodAddForm.get('name').hasError('required') && foodAddForm.get('name').touched">Yemek adı zorunludur</span>
+
+           <label class="font-weight-bolder">Açıklama</label>
+           <textarea id="description" formControlName="description" class="form-control mb-3" rows="5" placeholder="Yemeğinin detaylarını buraya girebilirsin.." autofocus></textarea>
+           <span class="help-block" *ngIf="foodAddForm.get('description').hasError('required') && foodAddForm.get('description').touched">Açıklama zorunludur</span>
+
+           <div class="form-row">
+             <div class="col-md-6">
+              <label class="font-weight-bolder">Satış fiyatı</label>
+              <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">₺</div>
+              </div>
+              <input id="price" formControlName="price" class="form-control" placeholder="8,25" autofocus>
+               </div>
+               <span class="help-block" *ngIf="foodAddForm.get('price').hasError('required') && foodAddForm.get('price').touched">Fiyat zorunludur</span>
+             </div>
+             <div class="col-md-6">
+
+              <label class="font-weight-bolder">Kategori</label>
+              <select formControlName="categoryId" class="form-control">
+               <option selected disabled>Kategori seçin..</option>
+               <option *ngFor="let category of categories" [ngValue]="category.id">
+                {{ category.name }}
+               </option>
+             </select> 
+             </div>
+           </div>          
+          </div>
+          <button class="btn btn-lg btn-primary" style="float: right;">Ekle</button>
+        </form>
+      </div>
+      
+  </div>

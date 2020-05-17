@@ -45,11 +45,11 @@
       <div class="row">
         <ng-template #noProduct>
           <div class="alert alert-primary" role="alert">
-            Bu kategoride ürün yoktur
+            Bu kategoride ürün yoktur 
           </div>
         </ng-template>
        
-  <div *ngFor="let food of foods | foodFilter:filterText" class="col-md-4">
+  <div *ngFor="let food of foods | foodFilter:filterText | paginate: { itemsPerPage: 3, currentPage: pageNumber } " class="col-md-4">
     <div  class="card mb-4" >
       <img src="{{ food.photoUrl }}" class="card-img-top" alt="yemek" width="330" height="330" style="object-fit: cover;"/>
       <div class="card-body">
@@ -68,7 +68,17 @@
       </div>
     </div>
   </div>
+
+   
       </div>
+      <pagination-controls (pageChange)="onPageChange($event)"
+      maxSize="9"
+      autoHide="true"
+      previousLabel="Geri"
+      nextLabel="İleri"
+      >
+    </pagination-controls>
     </main>
+
   </div>
 </div>

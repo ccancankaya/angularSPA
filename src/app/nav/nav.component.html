@@ -1,16 +1,34 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" routerLink="/">
-    <img src="/docs/4.4/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    <img
+      src=""
+      width="30"
+      height="30"
+      class="d-inline-block align-top"
+      alt=""
+    />
     Ev Yemeği.com
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarsExample08"
+    aria-controls="navbarsExample08"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+  <div
+    class="collapse navbar-collapse justify-content-md-center"
+    id="navbarsExample08"
+  >
     <ul class="navbar-nav">
-      <li class="nav-item ">
-        <a class="nav-link" routerLink="/" routerLinkActive="router-link-active" >Ana sayfa</a>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/" routerLinkActive="router-link-active"
+          >Ana sayfa</a
+        >
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="about">Hakkımızda</a>
@@ -25,26 +43,374 @@
         <a class="nav-link" routerLink="/contact">İletişim</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hesabım</a>
-        <div class="dropdown-menu  text-center" aria-labelledby="dropdown08">
-          <a class="dropdown-item" routerLink="login">Giriş yap</a>
-          <a class="dropdown-item" routerLink="register">Üye ol</a>
-          <a class="dropdown-item" routerLink="profile">Profilim</a>
-          <a class="dropdown-item" routerLink="kitchenDetail">Mutfağım</a>
-          <a class="dropdown-item" routerLink="orders">Siparişlerim</a>
-          <a class="dropdown-item" >Çıkış yap</a>
+        <a
+          class="nav-link dropdown-toggle"
+          id="dropdown08"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          href=""
+          >Hesabım</a
+        >
+        <div class="dropdown-menu text-center" aria-labelledby="dropdown08">
+          <a class="dropdown-item" data-toggle="modal" data-target="#loginModal" *ngIf="!isAuthenticated">Giriş yap</a>
+          <a class="dropdown-item" data-toggle="modal" data-target="#registerModal" *ngIf="!isAuthenticated">Üye ol</a>
+          <a class="dropdown-item" routerLink="/profile/main-profile">Profilim</a>
+          <a class="dropdown-item" routerLink="/profile/kitchen-profile">Mutfağım</a>
+          <a class="dropdown-item" routerLink="/profile/order">Siparişlerim</a>
+          <a class="dropdown-item" *ngIf="isAuthenticated" (click)="logOut()">Çıkış yap</a>
         </div>
       </li>
     </ul>
   </div>
-  <form class="form-inline"> 
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" routerLink="login">Giriş yap</button>
-    <button class="btn btn-outline-success my-2 my-sm-0 ml-3" type="submit" routerLink="register">Üye ol</button>
-    <button type="button" class="btn btn-primary ml-3">
-      <i class="fa fa-shopping-cart"></i> <span class="badge badge-light ml-2">9</span>
-      <span class="sr-only">unread messages</span>
+  <form class="form-inline" #loginForm="ngForm">
+    <button
+      class="btn btn-outline-success my-2 my-sm-0"
+      data-toggle="modal"
+      data-target="#loginModal"
+      *ngIf="!isAuthenticated"
+    >
+      Giriş yap
     </button>
+    <button
+      class="btn btn-outline-success my-2 my-sm-0 ml-3"
+      data-toggle="modal"
+      data-target="#registerModal"
+      *ngIf="!isAuthenticated"
+    >
+      Üye ol
+    </button>    
+        <button *ngIf="isAuthenticated"  class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Profiliniz
+        </button>
+
+          <div *ngIf="isAuthenticated" class="dropdown-menu" style="right:5!important; left: auto!important;" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" routerLink="/profile/main-profile">Profilim</a>
+            <a class="dropdown-item" routerLink="/profile/kitchen-profile">Mutfağım</a>
+            <a class="dropdown-item" (click)="logOut()">Çıkış yap</a>
+          </div>
+  
+      
   </form>
-</nav> 
+  <!--Login-Modal-->
+  <div #loginModal class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3 class="text-center mb-3">Giriş yap</h3>
+          <form (ngSubmit)="login()" #loginForm="ngForm">
+            <div class="form-group">
+              <label class="font-weight-bolder">Email</label>
+              <input class="form-control" type="text" name="email" [(ngModel)]="loginUser.email" required placeholder="Email giriniz"/>
+            </div>
+            <div class="form-group">
+              <label class="font-weight-bolder">Şifre</label>
+              <input class="form-control" type="password" name="password" [(ngModel)]="loginUser.password" required placeholder="Şifre giriniz"/>
+            </div>
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="rememberCheck"/>
+              <label class="form-check-label" for="rememberCheck">Beni hatırla</label>
+            </div>
+            <small id="emailHelp" class="form-text text-muted mb-3 ml-4">Giriş yapmadan önce okuyunuz<a href="" data-toggle="modal" data-target="#userTermsModal" class="text-decoration-none">kullanım şartları</a></small>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Giriş yap</button><small id="emailHelp" class="form-text float-right" style="font-size: 16px;"><a href="" class="text-decoration-none">Şifremi unuttum</a></small>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!--UserTerms-Modal-->
+  <div
+    class="modal fade"
+    id="userTermsModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalScrollableTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalScrollableTitle">
+            Kullanım koşulları
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+          consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel
+          scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
+          laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla
+          sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl
+          consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+          auctor fringilla. Cras mattis consectetur purus sit amet fermentum.
+          Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+          risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
+          cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+          lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia
+          bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+          scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper
+          nulla non metus auctor fringilla. Cras mattis consectetur purus sit
+          amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget
+          quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+          Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+          Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
+          magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+          ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur
+          purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+          egestas eget quam. Morbi leo risus, porta ac consectetur ac,
+          vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
+          nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
+          faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur.
+          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+          Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+          fringilla. Cras mattis consectetur purus sit amet fermentum. Cras
+          justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+          risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
+          cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+          lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia
+          bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+          scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper
+          nulla non metus auctor fringilla. Cras mattis consectetur purus sit
+          amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget
+          quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+          Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+          Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
+          magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+          ullamcorper nulla non metus auctor fringilla.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Okudum
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!--Register-Modal-->
+  <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Bize katıl</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="registerForm" (ngSubmit)="register()">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>İsim</label>
+                <input type="text" name="name" formControlName="name" class="form-control" id="name" />
+                <span class="help-block" *ngIf="registerForm.get('name').hasError('required') && registerForm.get('name').touched">
+                  Bu alan boş bırakılamaz
+                </span>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Soyisim</label>
+                <input type="text" name="surname" formControlName="surname" class="form-control" id="surname" />
+                <span class="help-block" *ngIf="registerForm.get('surname').hasError('required') && registerForm.get('surname').touched">
+                  Bu alan boş bırakılamaz
+                </span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Yaş</label>
+                <input type="text" name="age" formControlName="age" class="form-control" id="inputEmail4" />
+              </div>
+              <span class="help-block" *ngIf="registerForm.get('age').hasError('required') && registerForm.get('age').touched">
+                Bu alan boş bırakılamaz
+              </span>
+              <div class="form-group col-md-6">
+                <label>Cinsiyet</label>
+                <select id="gender" name="gender" formControlName="gender" class="form-control">
+                  <option selected>Cinsiyet seçin..</option>
+                  <option>Kadın</option>
+                  <option>Erkek</option>
+                </select>
+                <span class="help-block" *ngIf="registerForm.get('gender').hasError('required') && registerForm.get('gender').dirty">
+                  Bu alan boş bırakılamaz
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEmail4">Email</label>
+              <input type="email" name="email" formControlName="email" class="form-control" id="inputEmail4" />
+              <span class="help-block" *ngIf="registerForm.get('email').hasError('required') && registerForm.get('email').touched">
+                Bu alan boş bırakılamaz
+              </span>
+              <span class="help-block" *ngIf="registerForm.get('email').hasError('email') && registerForm.get('name').touched">
+                Lütfen geçerli bir email adresi giriniz
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword4">Şifre</label>
+              <input type="password" name="password" formControlName="password" class="form-control" id="inputPassword4" />
+              <span class="help-block" *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">
+                Bu alan boş bırakılamaz
+              </span>
+              <span class="help-block" *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched">
+                Şifre en az 4 karakter olmalıdır
+              </span>
+              <span class="help-block" *ngIf="registerForm.get('password').hasError('maxlength') && registerForm.get('password').touched">
+                Şifre 16 karakteri geçemez
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword4">Şifre-Tekrar </label>
+              <input type="password" name="confirmPassword" formControlName="confirmPassword" class="form-control" id="confirmPassword4" />
+              <span class="help-block" *ngIf="registerForm.get('confirmPassword').hasError('required') && registerForm.get('confirmPassword').touched">
+                Şifre doğrulama gerekli
+              </span>
+              <span class="help-block" *ngIf="registerForm.get('confirmPassword').touched 
+                      && registerForm.hasError('mismatch')">
+                Şifreler uyumsuz
+              </span>
+            </div>
+            <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                <label class="form-check-label" for="invalidCheck2">
+                  Üyelik <a href="" data-toggle="modal" data-target="#signUpTerms" class="text-decoration-none">şartlarını</a> ve <a href="" data-toggle="modal" data-target="#Terms" class="text-decoration-none">koşullarını</a> kabul ediyorum. 
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Kayıt ol</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!--SignUpTerms-Modal-->
+  <div class="modal fade" id="signUpTerms" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalScrollableTitle">Kullanıcı koşulları</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!--Terms-Modal-->
+    <div class="modal fade" id="Terms" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalScrollableTitle">Üyelik koşulları</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</nav>

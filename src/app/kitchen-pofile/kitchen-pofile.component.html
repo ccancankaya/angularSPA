@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Mutfağım</h1>
+  </div>
+
+  <div class="alert alert-warning alert-dismissible fade show" id="info" role="alert">
+    <strong>Mutfak bulunamadı!</strong> Henüz oluşturduğun mutfak bulunmuyor sende satış yapmak istiyorsan mutfak oluşturarak başlayabilirsin. <a routerLink="/profile/add-kitchen" class="text-decoration-none">Mutfak oluştur</a>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  
+  <div class="card">
+    <div class="card-body">
+      <img src="https://via.placeholder.com/200" class="rounded mx-auto d-block">
+      <button type="button" class="btn btn-primary btn-sm mx-auto d-block mt-2">Logo ekle</button>
+      <form [formGroup]="kitchenAddForm" (ngSubmit)="addKitchen()">
+        <div class="form-group">
+          <label>Mutfak adı</label>
+          <input type="text" class="form-control" formControlName="kitchenname" placeholder="ilgi çekici bir ad girin..">
+        </div>
+        <div class="form-group">
+          <label>Tanıtım yazısı</label>
+          <textarea name="description" rows="5" class="form-control" formControlName="description" placeholder="mutfağınızı tanıtn.."></textarea>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label>Kategorilerinizi seçiniz</label>
+            <select class="form-control" formControlName="categoryId">
+              <option selected>Birden çok seçim yapabilirsiniz</option>
+              <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Ödeme tipi</label>
+            <select class="form-control" formControlName="payType">
+              <option selected>Ödeme kabul tipi seçiniz</option>
+              <option >Kapıda nakit ödeme</option>
+              <option >Kapıda kredi kartı ile ödeme</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary mt-3 float-right">Kaydet</button>
+      </form>
+    </div>
+   
+  </div>

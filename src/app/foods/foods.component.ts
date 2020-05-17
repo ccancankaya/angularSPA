@@ -18,11 +18,25 @@ export class FoodsComponent implements OnInit {
     filterText = ""
     numberOfFood = 0
     foods: Food[];
+    public pageNumber: number = 1;
+    public Count: number;
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params=>{
       this.foodService.getFoods(params["categoryId"]).subscribe(data=>{
-        this.foods=data
+         this.foods=data;
+        this.pageNumber=1;
+        this.Count=data.length;
+      });
+    })
+  }
+
+  public onPageChange=(pageNumber)=>{
+    this.activatedRoute.params.subscribe(params=>{
+      this.foodService.getFoods(params["categoryId"]).subscribe(data=>{
+         this.foods=data;
+        this.pageNumber=pageNumber;
+        this.Count=data.length;
       });
     })
   }

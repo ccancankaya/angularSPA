@@ -3,8 +3,9 @@ import { Food } from '../models/food';
 import { AlertifyService } from '../services/alertify.service'
 import { FoodService } from '../services/food.service';
 import { ActivatedRoute } from '@angular/router';
-import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { Photo } from '../models/photo';
+import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery-9';
+
 
 
 @Component({
@@ -15,25 +16,28 @@ import { Photo } from '../models/photo';
 })
 export class FoodComponent implements OnInit {
 
+  galleryOptions: NgxGalleryOptions[];
+  galleryImages: NgxGalleryImage[];
+  food: Food;
+  photos:Photo[]=[];
 
   constructor(private alertifyService: AlertifyService, private foodService: FoodService,
     private activatedRoute: ActivatedRoute
   ) { }
 
-  food: Food;
-  photos:Photo[]=[];
-  galleryOptions: NgxGalleryOptions[];
-  galleryImages: NgxGalleryImage[];
+
+
 
   ngOnInit() {
 
     this.activatedRoute.params.subscribe(params => {
       this.foodService.getFood(params["id"]).subscribe(data => {
         this.food = data
+        this.getPhotosByFood(params["id"]);
       });
-    })
-
-  }
+      })
+    }
+  
 
   getPhotosByFood(id)
   {
@@ -58,11 +62,12 @@ export class FoodComponent implements OnInit {
     return imgUrls;
   }
 
+
   setGallery()
   {
     this.galleryOptions = [
       {
-          width: '600px',
+          width: '100%',
           height: '400px',
           thumbnailsColumns: 4,
           imageAnimation: NgxGalleryAnimation.Slide
@@ -84,9 +89,8 @@ export class FoodComponent implements OnInit {
       }
   ];
 
-  this.galleryImages = this.getImages()
+  this.galleryImages = this.getImages();
   }
-
   addToCart(food) {
 
     this.alertifyService.success(food.name + " sepete eklendi")

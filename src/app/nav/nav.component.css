@@ -1,5 +1,5 @@
 @media screen and (max-width: 770px) {
-    form {
+    .form-inline {
       display: none;
     }
     nav{
