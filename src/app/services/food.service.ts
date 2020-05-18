@@ -19,7 +19,9 @@ export class FoodService {
       this.foodId=Object.values(data)[0]
     });
   }
-
+  latestFoodId(){
+    return this.http.get(this.path+'/latest')
+  }
   get currentFoodId(){
     return this.foodId
   }

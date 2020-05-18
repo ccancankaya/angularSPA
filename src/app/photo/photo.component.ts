@@ -20,7 +20,9 @@ import { Category } from '../models/category';
 export class PhotoComponent implements OnInit {
 
   constructor(private foodService:FoodService,private authService:AuthService,private alertifyService:AlertifyService,private categoryService:CategoryService,private formBuilder:FormBuilder,private activatedRoute:ActivatedRoute) 
-  { }
+  { 
+   
+  }
 
   currentKitchenId:any
   food:Food;
@@ -30,22 +32,25 @@ export class PhotoComponent implements OnInit {
   uploader:FileUploader
   hasBaseDropZoneOver:boolean;
   hasAnotherDropZoneOver:boolean
-  baseUrl:'https://localhost:44357/api/'
   currentMain:Photo
   currentFood:any
   response:string
-  foodId:number
+  foodId:any
+
 
   ngOnInit(): void {
-    this.foodId=this.foodService.currentFoodId
-    console.log(this.foodId)
+    
+    this.foodService.latestFoodId().subscribe(data=>{
+      this.foodId=data
+    });
+
     this.initilazeUploader()
     
   }
 
   initilazeUploader(){
     this.uploader = new FileUploader({
-      url:'https://localhost:44357/api/food/'+22+'/photo',
+      url:'https://localhost:44357/api/food/'+this.foodId+'/photo',
       authToken:'Bearer'+localStorage.getItem("token"),
       isHTML5:true,
       allowedFileType:['image'],
@@ -53,7 +58,7 @@ export class PhotoComponent implements OnInit {
       removeAfterUpload:true,
       maxFileSize:10*1024*1024
     })
-
+    
     this.uploader.onSuccessItem=(item,response,status,headers)=>{
       //this.response=response
       if(response){
@@ -66,6 +71,7 @@ export class PhotoComponent implements OnInit {
           foodId:res.foodId
         }
         this.photos.push(photo)
+        console.log(photo)
       }
     }
 
@@ -81,4 +87,6 @@ export class PhotoComponent implements OnInit {
   public fileOverAnother(e:any):void {
     this.hasAnotherDropZoneOver = e;
   }
+
+
 }
