@@ -13,7 +13,10 @@ import { ActivatedRoute } from '@angular/router';
 export class FoodsComponent implements OnInit {
 
   constructor(private alertifyService: AlertifyService,private foodService:FoodService,
-    private activatedRoute:ActivatedRoute) { }
+    private activatedRoute:ActivatedRoute) {
+     
+     }
+
 
     filterText = ""
     numberOfFood = 0

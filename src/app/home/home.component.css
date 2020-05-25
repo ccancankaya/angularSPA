@@ -22,3 +22,16 @@
     z-index: -1;
   }
 }
+
+h1
+{
+  font-size:200px;
+}
+
+@media screen and (max-width:768px)
+{
+  h1 
+  {
+    font-size: 90px;
+  }
+}

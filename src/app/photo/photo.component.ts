@@ -50,7 +50,7 @@ export class PhotoComponent implements OnInit {
 
   initilazeUploader(){
     this.uploader = new FileUploader({
-      url:'https://localhost:44357/api/food/'+this.foodId+'/photo',
+      url:'https://localhost:44357/api/food/'+8+'/photo',
       authToken:'Bearer'+localStorage.getItem("token"),
       isHTML5:true,
       allowedFileType:['image'],

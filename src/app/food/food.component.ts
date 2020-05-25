@@ -62,6 +62,9 @@ export class FoodComponent implements OnInit {
     return imgUrls;
   }
 
+  takeOrder(){
+    this.alertifyService.success("Siparişiniz verildi")
+  }
 
   setGallery()
   {

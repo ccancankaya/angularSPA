@@ -49,7 +49,7 @@
           </div>
         </ng-template>
        
-  <div *ngFor="let food of foods | foodFilter:filterText | paginate: { itemsPerPage: 10, currentPage: pageNumber } " class="col-md-4">
+  <div *ngFor="let food of foods | foodFilter:filterText | paginate: { itemsPerPage: 6, currentPage: pageNumber } " class="col-md-4">
     <div  class="card mb-4" >
       <img src="{{ food.photoUrl }}" class="card-img-top" alt="yemek" width="330" height="330" style="object-fit: cover;"/>
       <div class="card-body">
@@ -64,7 +64,7 @@
           >
         </p>
         <a routerLink="/food/{{ food.id }}" class="btn btn-success mr-2">Detaylar</a>
-        <a (click)="addToCart(food)" class="btn btn-success">Sepete ekle</a>
+        <a (click)="addToCart(food)" class="btn btn-success">Sipariş ver</a>
       </div>
     </div>
   </div>

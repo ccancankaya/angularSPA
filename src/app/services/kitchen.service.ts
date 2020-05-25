@@ -32,11 +32,29 @@ addKitchenCategory(data){
   this.kitchenCategory.categoryId=data;
   this.httClient.post("https://localhost:44357/api/category/kitchenCategory",this.kitchenCategory).subscribe(data=>{})
 }
-getKitchenByUser(userId):Observable<Kitchen>{
+getKitchenByUser(userId){
   return this.httClient.get(this.path+'/user/'+userId)
 }
 
+getKitchens(): Observable<Kitchen[]> {
 
+  return this.httClient.get<Kitchen[]>(this.path).pipe(
+    tap(data => console.log(JSON.stringify(data))),
+    catchError(this.handleError)
+  );
+}
+
+handleError(err: HttpErrorResponse) {
+  let errorMessage = ""
+  if (err.error instanceof ErrorEvent) {
+    errorMessage = 'Bir hata meydana geldi ' + err.error.message
+  }
+  else {
+    errorMessage = 'Sistemsel bir hata'
+  }
+
+  return throwError(errorMessage);
+}
 
 
 

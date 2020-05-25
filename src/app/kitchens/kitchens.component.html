@@ -3,7 +3,7 @@
     <div class="row">
       <nav class="col-md-3 d-none d-md-block bg-light ">
         <div class="sidebar-sticky">
-      <app-category></app-category>
+
     </div>
   </nav>
       <div class="customize-search-header">
@@ -42,24 +42,28 @@
             </div>
           </div>
         </div>
-    
         <div class="row">
-          <div class="col-md-4">
-            <div class="card">
-              ifdl
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card">
-              ifdl
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card">
-              ifdl
+          <div *ngFor="let kitchen of Kitchens  | paginate: { itemsPerPage: 10, currentPage: pageNumber } " class="col-md-4">
+            <div  class="card mb-4">
+              <img src="{{ kitchen.logoUrl }}" class="card-img-top" alt="mutfak" width="400" height="330" style="object-fit:fill;"/>
+              <div class="card-body">
+                <h5 class="card-title">{{ kitchen.kitchenName | uppercase }}</h5>
+                <p class="card-text">
+                  {{ kitchen.description }}
+                </p>
+                <a routerLink="/kitchen/{{ kitchen.id }}" class="btn btn-success mr-2">Detaylar</a>
+              </div>
             </div>
           </div>
         </div>
+                
+        <pagination-controls (pageChange)="onPageChange($event)"
+        maxSize="9"
+        autoHide="true"
+        previousLabel="Geri"
+        nextLabel="İleri"
+        >
+      </pagination-controls>
       </main>
     </div>
   </div>
